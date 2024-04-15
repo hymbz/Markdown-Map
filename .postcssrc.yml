@@ -1,0 +1,4 @@
+plugins:
+  autoprefixer: {}
+  cssnano: {}
+  "postcss-nesting": { edition: "2024-02" }

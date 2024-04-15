@@ -1,0 +1,229 @@
+#sidebar {
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  height: 100%;
+
+  box-shadow: 0 0 1px 1px #00000024;
+
+  & > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 2em;
+    padding: 0.5em;
+
+    font-size: 1.4em;
+    color: #fff;
+
+    background-color: #ef5350;
+
+    & > button {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+
+      width: 2em;
+      height: 2em;
+      margin: 0;
+      padding: 0;
+
+      color: unset;
+
+      background-color: unset;
+      border-radius: 100%;
+      box-shadow: none;
+
+      &:hover {
+        background-color: #0004;
+      }
+    }
+
+    & > span {
+      flex-grow: 1;
+      padding: 0 0.3em;
+    }
+  }
+
+  .item-list {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item {
+    margin-top: 0.5em;
+    padding: 1em 1em 0;
+
+    &[data-is-secondary] {
+      padding-left: 3em;
+      font-size: 0.9em;
+    }
+
+    &[data-open] {
+      background-color: #fafafa;
+    }
+
+    &:hover {
+      background-color: #fafafa;
+    }
+
+    .item-name {
+      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+
+      & > h3 {
+        margin: 0 0.3em 0.5em 0;
+        line-height: 1.5;
+      }
+
+      & > svg {
+        flex-shrink: 0;
+        width: 2em;
+        margin: 0 0 0.5em;
+      }
+
+      & > input[type="checkbox"] {
+        width: 1.4em;
+        height: 1.4em;
+        margin: 0 1em 0.6em;
+        accent-color: #ef5350;
+      }
+    }
+  }
+
+  .group-list {
+    margin-top: 1em;
+    font-size: 1.2em;
+
+    .item {
+      overflow: unset;
+      padding: 0.2em 0;
+    }
+  }
+
+  .tags {
+    cursor: initial;
+    flex-shrink: 0;
+    margin: 0 0 0.5em;
+    font-size: 0.9em;
+
+    .tag {
+      margin: 0 0.2em;
+      padding: 0.2em 0.8em;
+
+      font-size: 0.9em;
+      color: #fff;
+
+      background-color: #607d8b;
+      border-radius: 1em;
+    }
+  }
+
+  .desc {
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid #d0d7deb3;
+
+    p:not(:last-child) {
+      margin-bottom: 1em;
+    }
+
+    & > blockquote {
+      padding: 1em;
+      background-color: #eff0f3;
+      border-left: none;
+      border-radius: 0.5em;
+    }
+
+    a.map-link {
+      padding: 0.2em 0.4em;
+
+      font-size: 0.8em;
+      color: white;
+
+      background-color: #db4437;
+      border-radius: 0.3em;
+    }
+
+    &:empty {
+      padding-bottom: 0.5em;
+    }
+  }
+
+  & > .item-list > .desc {
+    padding: 1.5em 1em;
+    border-bottom: 2px solid #d0d7deb3;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .item:not([data-open]) .desc {
+    cursor: pointer;
+    padding-bottom: 0.5em;
+
+    & > :not(:first-child),
+    & :not(p, a) {
+      display: none;
+    }
+  }
+
+  &[data-copy-mode] {
+    /* 防止在复制时出现背景颜色 */
+    .item {
+      background-color: unset;
+    }
+
+    img {
+      display: inherit;
+      opacity: unset;
+    }
+
+    /* 不方便将超链接转为文字，就把颜色去掉好了 */
+    a[data-href] {
+      color: currentcolor;
+    }
+
+    /* 复制到微博时 figure 会变为 img 导致底部边距失效 */
+    figure:last-child figcaption {
+      margin-bottom: -1em;
+    }
+
+    .item:last-of-type .desc {
+      border-bottom: unset;
+    }
+  }
+
+  .hidden-tip {
+    padding: 0.5em 1em;
+
+    font-style: italic;
+
+    opacity: 0.5;
+    background-color: unset;
+    outline: none;
+  }
+}
+
+.is-done {
+  text-decoration-line: line-through;
+  opacity: 0.4;
+}
+
+@media (width <= 800px) {
+  #sidebar > header {
+    padding: 0.2em;
+  }
+}
+
+#search {
+  box-sizing: border-box;
+  margin: 1em 1em 4px;
+  border-radius: 1em;
+}

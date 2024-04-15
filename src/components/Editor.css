@@ -1,0 +1,64 @@
+#editor {
+  --scrollbar-slider: #fff6;
+  --background: none;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 50vw;
+  height: 80vh;
+
+  .editor {
+    height: 100%;
+    padding: 1em;
+    background-color: #282c34;
+    border-radius: 0.5em;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    outline: none;
+
+    code {
+      /* 抄的知乎 */
+      font-family: Menlo, Monaco, Consolas, "Andale Mono", "lucida console",
+        "Courier New", "LXGW WenKai Screen", serif;
+      font-size: 1.2em;
+      line-height: 1.2em;
+      color: white;
+
+      border-radius: 6px;
+      outline: none;
+    }
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 1.5em;
+    right: 1em;
+    transform-origin: top right;
+    transform: scale(0.8);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    & > button {
+      padding: 0.3em 0.8em;
+      opacity: 0.6;
+      background: var(--button-base);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media (width <= 800px) {
+  #editor {
+    display: none;
+  }
+}

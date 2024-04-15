@@ -1,0 +1,188 @@
+body {
+  display: flex;
+  flex-direction: row;
+
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 99;
+}
+
+#map {
+  flex-grow: 1;
+  height: 100dvh;
+
+  /* 消除 water.css 的影响 */
+  button {
+    margin: 0;
+  }
+}
+
+#root {
+  --focus: #ef5350ab;
+
+  z-index: 10;
+  width: 30em;
+  height: 100dvh;
+
+  svg {
+    width: 1em;
+  }
+}
+
+#root,
+#sidebar,
+.markdown-body {
+  font-size: 17px;
+}
+
+body,
+.markdown-body {
+  /* 抄的知乎 */
+  font-family:
+    "Noto Sans CJK SC",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Source Han Sans SC",
+    "WenQuanYi Micro Hei",
+    sans-serif;
+}
+
+.markdown-body {
+  overflow: auto;
+  margin: 0;
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    padding: 1em;
+  }
+
+  img {
+    margin: auto;
+    background-color: transparent;
+  }
+
+  figure {
+    width: fit-content;
+    max-width: 100%;
+    margin: auto;
+
+    picture {
+      display: flex;
+    }
+
+    figcaption {
+      margin: 0.2em 0;
+      font-size: 0.7em;
+      color: #656d76;
+      text-align: center;
+    }
+  }
+
+  blockquote {
+    font-style: normal;
+    background-color: #0000;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    figure:last-child {
+      margin-bottom: -0.7em;
+    }
+  }
+
+  mark {
+    padding: 0;
+  }
+
+  /* 确保在复制时能复制到颜色样式 */
+  a {
+    color: #0076d1;
+  }
+}
+
+.lazyload {
+  opacity: 0;
+}
+
+.lazyloading,
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+/* 防止 toast 在显示长 url 时不换行 */
+.sldt-active div[role="status"] {
+  word-break: break-word;
+}
+
+.beautify-scrollbar {
+  /* 火狐的滚动条样式 */
+  scrollbar-color: var(--scrollbar-slider, #0006) transparent;
+  scrollbar-width: thin;
+
+  /* chrome 的滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-slider, #0006);
+  }
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (width <= 800px) {
+  body {
+    flex-direction: column-reverse;
+    height: 100dvh;
+  }
+
+  #map {
+    flex-shrink: 0;
+    height: 30vh;
+  }
+
+  #root {
+    overflow: auto;
+    flex-grow: 1;
+    width: unset;
+    height: inherit;
+  }
+
+  #root,
+  #sidebar,
+  .markdown-body {
+    font-size: 16px;
+  }
+}
