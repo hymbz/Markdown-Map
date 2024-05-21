@@ -1405,11 +1405,18 @@ rasterImages:
 > ![by hymbz](img/大縄場大橋公園-hymbz-2.avif "4032x3024")
 > ![by hymbz](img/大縄場大橋公園-hymbz-3.avif "4032x3024")
 
-※ 实际并没有篮球架
+> ![by 谷歌街景](img/大縄場大橋公園-谷歌街景.webp "829x557")
+>
+> 篮球架的篮板如今已经被拆除了，只剩支架与旁边的告示
+>
+> ![by hymbz](img/大縄場大橋公園-hymbz-4.webp "1846x1375")
+> ![by hymbz](img/大縄場大橋公園-hymbz-5.webp "1511x981")
 
 [by 微博@甘井文](https://weibo.com/7651616302/O5Vjqawba)
 
 #小说
+
+[Google Map](https://maps.app.goo.gl/D7G94uAmveSv8jDu5)
 
 #35.4231846, 136.7450939
 
