@@ -1,7 +1,6 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 import { Toaster } from 'solid-toast';
-import lazySizes from 'lazysizes';
 
 import { Sidebar } from './components/Sidebar';
 import { Editor } from './components/Editor';
@@ -11,8 +10,6 @@ import './route';
 
 import 'water.css/out/light.min.css';
 import './index.css';
-
-lazySizes.cfg.expand = 1000;
 
 const root = document.querySelector('#root');
 

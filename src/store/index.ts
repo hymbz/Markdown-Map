@@ -4,10 +4,13 @@ import { ReactiveSet } from '@solid-primitives/set';
 import { createRoot } from 'solid-js';
 import { type RootContent } from 'mdast';
 import toast from 'solid-toast';
+import lazySizes from 'lazysizes';
 
 import exampleMd from '../../example.md?raw';
 import { createEffectOn, scrollIntoView } from '../helper';
 import { type RasterImage } from '../map';
+
+lazySizes.cfg.expand = 1000;
 
 export interface Marker {
   id: string;
@@ -108,6 +111,9 @@ createRoot(() => {
   createEffectOn(
     () => store.activeGroup,
     (groupId) => {
+      // 使用电脑访问时，预加载所有图片
+      lazySizes.cfg.preloadAfterLoad = screen.width > 800;
+
       const group = store.groups.get(groupId);
       if (!group?.markers.includes(store.activeItem))
         setState('activeItem', '');

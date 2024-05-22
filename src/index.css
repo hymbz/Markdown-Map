@@ -117,14 +117,8 @@ body,
   }
 }
 
-.lazyload {
-  opacity: 0;
-}
-
-.lazyloading,
-.lazyloaded {
-  opacity: 1;
-  transition: opacity 300ms;
+img:not([src], [srcset]) {
+  visibility: hidden;
 }
 
 /* 防止 toast 在显示长 url 时不换行 */
