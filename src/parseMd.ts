@@ -38,15 +38,16 @@ const hasGoogleMapUrl = (nodeList: RootContent[]) => {
 
 /** 补全并转换远程文档的链接 */
 const handleUrl = (urlText: string) => {
-  let url: URL;
+  let url: string;
   if (urlText.startsWith('gh/')) {
-    url = new URL(`https://cdn.jsdelivr.net/${urlText}`);
-    if (!urlText.endsWith('.md')) url.pathname += '/README.md';
-  } else if (urlText.startsWith('http')) {
-    url = new URL(urlText);
-  } else {
-    url = new URL(`http://${urlText}`);
-  }
+    url = `https://cdn.jsdelivr.net/${urlText}`;
+    if (!urlText.endsWith('.md')) url += '/README.md';
+  } else if (urlText.startsWith('cf/')) {
+    url = urlText.replace(/cf\/(.+?)\//, 'https://$1.pages.dev/');
+    if (!urlText.endsWith('.md')) url += '/README.md';
+  } else if (urlText.startsWith('x/')) url = urlText.slice(1);
+  else if (urlText.startsWith('http')) url = urlText;
+  else url = `http://${urlText}`;
 
   return url;
 };
@@ -86,11 +87,11 @@ export const parseMd = async (
     });
 
     const url = handleUrl(target.url);
-    state.baseUrl = /.+(?=\/)/.exec(url.href)![0];
 
     try {
       const res = await fetch(url, { cache: 'no-cache' });
       state.md = await res.text();
+      state.baseUrl = /.+(?=\/)/.exec(res.url)?.[0] || state.baseUrl;
       toast.success(`${tip}\n加载成功`, { id: target.url, duration: 1000 * 2 });
     } catch (error) {
       console.error(error);
@@ -99,11 +100,11 @@ export const parseMd = async (
     }
   }
 
-  if (!state.md) return {} as State;
+  if (!state.md) return state;
 
   const root = mdToMdast.parse(state.md);
   const body = root.children;
-  if (body.length === 0) return {} as State;
+  if (body.length === 0) return state;
 
   const markerSlugger = new GithubSlugger();
   const groupSlugger = new GithubSlugger();

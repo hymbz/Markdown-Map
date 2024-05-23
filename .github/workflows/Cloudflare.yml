@@ -1,0 +1,72 @@
+name: Build and Deploy to Cloudflare Pages
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Deploy to Cloudflare Pages
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Switch to master and run build
+        env:
+          VITE_ACCESS_TOKEN: ${{ secrets.VITE_ACCESS_TOKEN }}
+        run: |
+          git checkout master
+          pnpm install
+          pnpm build
+
+      - name: Copy build output to temp directory
+        run: |
+          mkdir -p temp
+          cp -r dist/* temp/
+
+      - name: Copy branch files to temp directory
+        run: |
+          for branch in $(git branch -r | grep -v '\->' | grep -v master | sed 's/origin\///'); do
+            git checkout $branch
+            mkdir -p temp/$branch
+            find . -maxdepth 1 -mindepth 1 ! -name 'temp' ! -name '.' ! -name '.git' ! -name '.github' -exec cp -r {} temp/$branch/ \;
+          done
+
+      - name: Upload to Cloudflare Pages
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: "mdmap"
+          directory: ./temp
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
